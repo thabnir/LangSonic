@@ -1,6 +1,8 @@
 # Project-specific files:
 datasets/
 libsndfile/
+fr_spect_0/
+fr_train_0/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
