@@ -1,5 +1,7 @@
 # Project-specific files:
 data/
+hashes/
+.vscode/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
