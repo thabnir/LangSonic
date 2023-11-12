@@ -3,6 +3,12 @@ datasets/
 libsndfile/
 fr_spect_0/
 fr_train_0/
+en_spect_0
+en_train_0
+es_spect_0
+es_train_0
+
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
