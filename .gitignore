@@ -1,4 +1,5 @@
 # Project-specific files:
+<<<<<<< HEAD
 datasets/
 libsndfile/
 fr_spect_0/
@@ -9,6 +10,11 @@ es_spect_0
 es_train_0
 
 
+=======
+data/
+hashes/
+.vscode/
+>>>>>>> 245755f3f1b6964bb494e36316984e5516ad0b3e
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
