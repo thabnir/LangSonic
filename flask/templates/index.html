@@ -47,8 +47,7 @@
         }
 
         #record-btn{
-            background-color: #f9fafa;
-            padding: 6px;
+            border-radius: 5px;
             cursor: pointer;
             display: inline-block;
             margin-right: 10px;
@@ -58,9 +57,14 @@
             background-color: #95D8EB;
         }
         #stop-btn {
+            border-radius: 5px;
             cursor: pointer;
             display: none;
             margin-right: 10px;
+            transition: background-color 0.3s ease;
+        }
+        #stop-btn:hover {
+            background-color: #ea5858;
         }
         #audio-container {
             margin-top: 20px;
