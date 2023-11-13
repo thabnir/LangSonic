@@ -3,20 +3,62 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>MP3 File Upload</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static',filename= 'css/main.css')}}"
+    />
+    <title>LangSonic</title>
   </head>
   <body>
-    <h1>MP3 File Upload</h1>
+    <header>
+      <h1>Welcome to LangSonic</h1>
+    </header>
+    <div class="container">
+      <h2>About LangSonic</h2>
+      <p>
+        This is a single webpage showcasing LangSonic, a place where language
+        meets music.
+      </p>
+      <button class="mic" id="micButton">
+        <img
+          src="{{ url_for('static',filename= 'css/microphone_icon.png')}}"
+          alt="Microphone"
+        />
+      </button>
+      <audio controls id="audioControl" style="display: none"></audio>
+    </div>
 
-    {% if error %}
-    <p style="color: red">{{ error }}</p>
-    {% endif %} {% if message %}
-    <p style="color: green">{{ message }}</p>
-    {% endif %}
+    <script>
+      const micButton = document.getElementById("micButton");
+      const audioControl = document.getElementById("audioControl");
 
-    <form action="/upload" method="post" enctype="multipart/form-data">
-      <input type="file" name="file" accept=".mp3" />
-      <input type="submit" value="Upload" />
-    </form>
+      let mediaRecorder;
+      let chunks = [];
+
+      // Start recording
+      micButton.addEventListener("click", async () => {
+        if (mediaRecorder && mediaRecorder.state === "recording") {
+          mediaRecorder.stop();
+          micButton.innerHTML =
+            '<img src="static/css/stop_icon.png" alt="Stop" />'; // Change the button to a stop icon
+        } else {
+          const stream = await navigator.mediaDevices.getUserMedia({
+            audio: true,
+          });
+          mediaRecorder = new MediaRecorder(stream);
+
+          mediaRecorder.ondataavailable = (e) => chunks.push(e.data);
+          mediaRecorder.onstop = () => {
+            const blob = new Blob(chunks, { type: "audio/wav" });
+            chunks = [];
+            const audioURL = URL.createObjectURL(blob);
+            audioControl.src = audioURL;
+            audioControl.style.display = "block"; // Show the audio control to playback
+          };
+
+          mediaRecorder.start();
+        }
+      });
+    </script>
   </body>
 </html>
