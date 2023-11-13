@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>LangSonic</title>
     <style>
         body {
@@ -14,37 +13,37 @@
             color: #000;
         }
 
-        header {
-            background-color: #95D8EB;
-            padding: 20px;
-            text-align: center;
-            font-size: 22px;
-        }
+      header {
+        background-color: #95d8eb;
+        padding: 20px;
+        text-align: center;
+        font-size: 22px;
+      }
 
-        #logo {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            max-width: 170px;
-            height: 110px;
-        }
+      #logo {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        max-width: 170px;
+        height: 110px;
+      }
 
-        #slogan {
-            clear: both;
-        }
+      #slogan {
+        clear: both;
+      }
 
-        main {
-            padding: 20px;
-        }
+      main {
+        padding: 20px;
+      }
 
-        #about-us {
-            text-align: justify;
-        }
+      #about-us {
+        text-align: justify;
+      }
 
-        #mic-container {
-            text-align: center;
-            margin-top: 20px;
-        }
+      #mic-container {
+        text-align: center;
+        margin-top: 20px;
+      }
 
         #record-btn{
             cursor: pointer;
@@ -60,23 +59,27 @@
             margin-top: 20px;
         }
 
-        #audio-replay {
-            cursor: pointer;
-            display: none;
-        }
+      #audio-replay {
+        cursor: pointer;
+        display: none;
+      }
 
-        #timer {
-            display: none;
-            margin-top: 10px;
-        }
+      #timer {
+        display: none;
+        margin-top: 10px;
+      }
     </style>
-</head>
+  </head>
 
-<body>
+  <body>
     <header>
-        <h1>LangSonic</h1>
-        <div id="slogan">Decoding Diversity: Where Words Unite!</div>
-        <img id="logo" src="https://is1-ssl.mzstatic.com/image/thumb/Purple126/v4/03/74/e0/0374e0bb-307f-b91b-cd20-000f041db681/AppIcon-1x_U007emarketing-0-7-0-85-220.png/1200x630wa.png" alt="Logo">
+      <h1>LangSonic</h1>
+      <div id="slogan">Decoding Diversity: Where Words Unite!</div>
+      <img
+        id="logo"
+        src="https://is1-ssl.mzstatic.com/image/thumb/Purple126/v4/03/74/e0/0374e0bb-307f-b91b-cd20-000f041db681/AppIcon-1x_U007emarketing-0-7-0-85-220.png/1200x630wa.png"
+        alt="Logo"
+      />
     </header>
 
     <main>
@@ -106,93 +109,117 @@
             </div>
         </section>
 
-        <section id="about-us">
-            <h2 style="color: #60ccea;"><b>See the results:</b></h2>
-            <p>
-                The language detected is: *whatever the model says*
-            </p>
-        </section>
-
+      <section id="about-us">
+        <h2 style="color: #60ccea"><b>See the results:</b></h2>
+        <p>The language detected is: *whatever the model says*</p>
+      </section>
     </main>
 
     <script>
-        let mediaRecorder;
-        let audioChunks = [];
-        let timerInterval;
-        let seconds = 0;
-        let minutes = 0;
+      let mediaRecorder;
+      let audioChunks = [];
+      let timerInterval;
+      let seconds = 0;
+      let minutes = 0;
 
-        function startRecording() {
-            const stream = navigator.mediaDevices.getUserMedia({ audio: true });
+      function sendAudioToBackend(blob) {
+        const formData = new FormData();
+        formData.append("file", blob, "recording.wav"); // Assuming the file type is 'audio/wav'
 
-            stream.then((stream) => {
-                mediaRecorder = new MediaRecorder(stream);
-
-                mediaRecorder.ondataavailable = (event) => {
-                    if (event.data.size > 0) {
-                        audioChunks.push(event.data);
-                    }
-                };
-
-                mediaRecorder.onstop = () => {
-                    clearInterval(timerInterval);
-
-                    const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
-                    const audioUrl = URL.createObjectURL(audioBlob);
-
-                    console.log("Audio Blob:", audioBlob);
-                    console.log("Audio URL:", audioUrl);
-
-                    audioChunks = [];
-                    document.getElementById('record-btn').style.display = 'block';
-                    document.getElementById('stop-btn').style.display = 'none';
-                    document.getElementById('timer').style.display = 'none';
-                    document.getElementById('audio-player').src = audioUrl;
-                    document.getElementById('audio-replay').style.display = 'none';
-
-                    // Reset the timer
-                    resetTimer();
-                };
-
-                mediaRecorder.start();
-                document.getElementById('record-btn').style.display = 'none';
-                document.getElementById('stop-btn').style.display = 'block';
-                document.getElementById('timer').style.display = 'block';
-                document.getElementById('audio-replay').style.display = 'none';
-
-                // Start the timer
-                timerInterval = setInterval(updateTimer, 1000);
-            });
-        }
-
-        function stopRecording() {
-            if (mediaRecorder.state === 'recording') {
-                mediaRecorder.stop();
+        fetch("/upload", {
+          method: "POST",
+          body: formData,
+        })
+          .then((response) => {
+            if (response.ok) {
+              console.log("Audio sent successfully to the backend");
+              // Perform actions based on backend response if needed
+            } else {
+              console.error("Failed to send audio to the backend");
+              // Handle error scenarios
             }
-        }
+          })
+          .catch((error) => {
+            console.error("Error while sending audio:", error);
+            // Handle error scenarios
+          });
+      }
 
-        function updateTimer() {
-            seconds++;
-            if (seconds === 60) {
-                seconds = 0;
-                minutes++;
+      function startRecording() {
+        const stream = navigator.mediaDevices.getUserMedia({ audio: true });
+
+        stream.then((stream) => {
+          mediaRecorder = new MediaRecorder(stream);
+
+          mediaRecorder.ondataavailable = (event) => {
+            if (event.data.size > 0) {
+              audioChunks.push(event.data);
             }
+          };
 
-            const formattedTime = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-            document.getElementById('timer-display').innerText = formattedTime;
+          mediaRecorder.onstop = () => {
+            clearInterval(timerInterval);
+
+            const audioBlob = new Blob(audioChunks, { type: "audio/wav" });
+            const audioUrl = URL.createObjectURL(audioBlob);
+
+            console.log("Audio Blob:", audioBlob);
+            console.log("Audio URL:", audioUrl);
+
+            audioChunks = [];
+            document.getElementById("record-btn").style.display = "block";
+            document.getElementById("stop-btn").style.display = "none";
+            document.getElementById("timer").style.display = "none";
+            document.getElementById("audio-player").src = audioUrl;
+            document.getElementById("audio-replay").style.display = "none";
+
+            // Reset the timer
+            resetTimer();
+          };
+
+          mediaRecorder.start();
+          document.getElementById("record-btn").style.display = "none";
+          document.getElementById("stop-btn").style.display = "block";
+          document.getElementById("timer").style.display = "block";
+          document.getElementById("audio-replay").style.display = "none";
+
+          // Start the timer
+          timerInterval = setInterval(updateTimer, 1000);
+        });
+      }
+
+      function stopRecording() {
+        if (mediaRecorder.state === "recording") {
+          mediaRecorder.stop();
+        }
+        const audioBlob = new Blob(audioChunks, { type: "audio/wav" });
+        sendAudioToBackend(audioBlob);
+      }
+
+      function updateTimer() {
+        seconds++;
+        if (seconds === 60) {
+          seconds = 0;
+          minutes++;
         }
 
-        function resetTimer() {
-            seconds = 0;
-            minutes = 0;
-            document.getElementById('timer-display').innerText = '00:00';
-        }
+        const formattedTime = `${String(minutes).padStart(2, "0")}:${String(
+          seconds
+        ).padStart(2, "0")}`;
+        document.getElementById("timer-display").innerText = formattedTime;
+      }
 
-        function replayAudio() {
-            const audioPlayer = document.getElementById('audio-player');
-            audioPlayer.currentTime = 0;
-            audioPlayer.play();
-        }
+      function resetTimer() {
+        seconds = 0;
+        minutes = 0;
+        document.getElementById("timer-display").innerText = "00:00";
+      }
+
+      function replayAudio() {
+        const audioPlayer = document.getElementById("audio-player");
+        audioPlayer.currentTime = 0;
+        audioPlayer.play();
+      }
     </script>
-</body>
+  </body>
 </html>
