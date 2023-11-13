@@ -5,13 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>LangSonic</title>
     <style>
-      body {
-        margin: 0;
-        padding: 0;
-        font-family: Arial, sans-serif;
-        background-color: #eae7e7;
-        color: #000;
-      }
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #eae7e7;
+            color: #000;
+        }
 
       header {
         background-color: #95d8eb;
@@ -45,19 +45,19 @@
         margin-top: 20px;
       }
 
-      #record-btn {
-        cursor: pointer;
-        display: inline-block;
-        margin-right: 10px;
-      }
-      #stop-btn {
-        cursor: pointer;
-        display: none;
-        margin-right: 10px;
-      }
-      #audio-container {
-        margin-top: 20px;
-      }
+        #record-btn{
+            cursor: pointer;
+            display: inline-block;
+            margin-right: 10px;
+        }
+        #stop-btn {
+            cursor: pointer;
+            display: none;
+            margin-right: 10px;
+        }
+        #audio-container {
+            margin-top: 20px;
+        }
 
       #audio-replay {
         cursor: pointer;
@@ -83,32 +83,31 @@
     </header>
 
     <main>
-      <section id="about-us">
-        <h2 style="color: #60ccea"><b>About LangSonic:</b></h2>
-        <p>
-          Welcome to our Language Detection Model! This project aims to
-          automatically identify the language of a given voice note using signal
-          processing, making it a versatile tool for applications such as
-          content filtering, language-specific analysis, and more. Happy
-          Detecting! Developed by Basel, Henry, and Abrar.
-        </p>
-      </section>
+        <section id="about-us">
+            <h2 style="color: #60ccea;"><b>About LangSonic:</b></h2>
+            <p>
+                Welcome to our Language Detection Model! This project aims to automatically identify the language
+                of a given voice note using signal processing, making it a versatile tool for applications such as
+                content filtering, language-specific analysis, and more. Happy Detecting!
+                Developed by Basel, Henry, and Abrar.
+            </p>
+        </section>
 
-      <section id="about-us">
-        <h2 style="color: #60ccea"><b>Try it out:</b></h2>
-        <p>Please click the record button and stop recording when done!</p>
-        <div id="mic-container">
-          <div id="record-btn" onclick="startRecording()">🎤 Record</div>
-          <div id="stop-btn" onclick="stopRecording()">🛑 Stop</div>
-          <div id="timer">
-            Recording time: <span id="timer-display">00:00</span>
-          </div>
-        </div>
-        <div id="audio-container">
-          <audio id="audio-player" controls></audio>
-          <div id="audio-replay" onclick="replayAudio()">🔊 Replay</div>
-        </div>
-      </section>
+        <section id="about-us">
+            <h2 style="color: #60ccea;"><b>Try it out:</b></h2>
+            <p>
+                Please click the record button and stop recording when done!
+            </p>
+            <div id="mic-container">
+                <div id="record-btn" onclick="startRecording()">🎤 Record</div>
+                <div id="stop-btn" onclick="stopRecording()">🛑 Stop</div>
+                <div id="timer">Recording time: <span id="timer-display">00:00</span></div>
+            </div>
+            <div id="audio-container">
+                <audio id="audio-player" controls></audio>
+                <div id="audio-replay" onclick="replayAudio()">🔊 Replay</div>
+            </div>
+        </section>
 
       <section id="about-us">
         <h2 style="color: #60ccea"><b>See the results:</b></h2>
