@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MP3 File Upload</title>
+  </head>
+  <body>
+    <h1>MP3 File Upload</h1>
+
+    {% if error %}
+    <p style="color: red">{{ error }}</p>
+    {% endif %} {% if message %}
+    <p style="color: green">{{ message }}</p>
+    {% endif %}
+
+    <form action="/upload" method="post" enctype="multipart/form-data">
+      <input type="file" name="file" accept=".mp3" />
+      <input type="submit" value="Upload" />
+    </form>
+  </body>
+</html>
