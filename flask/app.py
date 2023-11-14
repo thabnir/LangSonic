@@ -73,7 +73,7 @@ def predict_from_mp3(path):
 
 from languages import LANGUAGES
 
-langs = ["German", "English", "Spanish", "French", "Italian"]
+langs = ["German", "English", "Spanish", "French", "Italian", "Arabic", "Hindi"]
 
 
 def get_language(prediction):
