@@ -3,7 +3,60 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>LangSonic - Audio Recorder</title>
+    <title>LangSonic</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #e8e5e5;
+            color: #000;
+        }
+
+        header {
+            background-color: #95D8EB;
+            padding: 20px;
+            text-align: center;
+            font-size: 22px;
+        }
+
+        #logo {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            max-width: 150px;
+            height: 90px;
+        }
+
+        #slogan {
+            clear: both;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        #about-us {
+            text-align: justify;
+        }
+    </style>
+    <header>
+        <h1>LangSonic</h1>
+        <div id="slogan">Decoding Diversity: Where Words Unite!</div>
+        <img id="logo" src="https://is1-ssl.mzstatic.com/image/thumb/Purple126/v4/03/74/e0/0374e0bb-307f-b91b-cd20-000f041db681/AppIcon-1x_U007emarketing-0-7-0-85-220.png/1200x630wa.png" alt="Logo">
+    </header>
+
+    <main>
+        <section id="about-us">
+            <h2 style="color: #4cc2e3;"><b>About LangSonic:</b></h2>
+            <p>
+                Welcome to our Language Detection Model! This project aims to automatically identify the language
+                of a given voice note using signal processing, making it a versatile tool for applications such as
+                content filtering, language-specific analysis, and more. Happy Detecting!
+                Developed by Basel, Henry, and Abrar.
+            </p>
+        </section>
+    </main>
     <link
       rel="stylesheet"
       href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
@@ -61,10 +114,6 @@
     </script>
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-      <a class="navbar-brand" href="#">LangSonic</a>
-    </nav>
-
     <div class="container mt-5">
       <h1 class="text-center mb-4">Audio Recorder</h1>
 
