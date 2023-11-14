@@ -15,8 +15,11 @@
     <div class="container mt-5">
       <h2>Prediction Results</h2>
       {% if prediction %}
-      <p>The predicted language is: <strong>{{ prediction[0][0] }}</strong></p>
-      <p>Confidence: <strong>{{ prediction[0][1] }}</strong></p>
+      <p>
+        The predicted language is:
+        <strong>{{ prediction[0][0] }}</strong>
+      </p>
+      <p>Confidence: <strong>{{ prediction[0][1] | round(2) }}</strong></p>
 
       <h3>All Predictions</h3>
       <table class="table">
@@ -30,7 +33,7 @@
           {% for language, probability in prediction %}
           <tr>
             <td>{{ language }}</td>
-            <td>{{ probability }}</td>
+            <td>{{ probability | round(2) }}</td>
           </tr>
           {% endfor %}
         </tbody>

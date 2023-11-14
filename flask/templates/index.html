@@ -47,6 +47,14 @@
           .then((html) => {
             // Inject the HTML response into the resultsContainer
             document.getElementById("resultsContainer").innerHTML = html;
+            console.log(
+              "New HTML response at:",
+              new Date().toLocaleTimeString(),
+              "Response: ",
+              html
+            );
+            // Reset the audio chunks
+            audioChunks = [];
           })
           .catch((error) => console.error("Error:", error));
       }
