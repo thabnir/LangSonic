@@ -1,7 +1,8 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, make_response
 import tensorflow as tf
 import mp3tospect
 import numpy as np
+import os
 
 app = Flask(__name__)
 
@@ -18,22 +19,29 @@ def index():
 @app.route("/upload", methods=["POST"])
 def upload():
     if "file" not in request.files:
+        
         return render_template("index.html", error="No file part")
 
     file = request.files["file"]
     print(f"File: {file}")
 
     if file.filename == "":
+        
         return render_template("index.html", error="No selected file")
 
     if file:
-        filepath = f"./data/{file.filename}"
+        directory = "./data"
+        if not os.path.exists(directory):
+            os.makedirs(directory)
+
+        filepath = f"{directory}/{file.filename}"
         print(filepath)
         file.save(filepath)
         prediction = predict_from_mp3(filepath)
         print(prediction)
         print(get_language(prediction))
-        return render_template("results.html", prediction=prediction)
+        
+        return render_template("index.html", prediction=prediction)
         # return render_template("index.html", message="File uploaded successfully")
 
     # TODO: handle error
