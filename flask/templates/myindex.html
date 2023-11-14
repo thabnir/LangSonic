@@ -52,5 +52,33 @@
     <button id="stopButton" onclick="stopRecording()" disabled>
       Stop Recording
     </button>
+
+    <div class="result">
+      <p>The predicted language is: <strong id="predictedLanguage"></strong></p>
+    </div>
+
+    <script>
+      function updatePredictedLanguage(language) {
+        document.getElementById("predictedLanguage").innerText = language;
+      }
+
+      window.onload = function () {
+        const predictionElement = document.getElementById("prediction");
+        if (predictionElement) {
+          const predictionData =
+            predictionElement.getAttribute("data-prediction");
+          if (predictionData) {
+            const prediction = JSON.parse(predictionData);
+            const predictedLanguage = getLanguage(prediction);
+            updatePredictedLanguage(predictedLanguage);
+          }
+        }
+      };
+
+      function getLanguage(prediction) {
+        const langs = ["German", "English", "Spanish", "French", "Italian"];
+        return langs[prediction.indexOf(Math.max(...prediction))];
+      }
+    </script>
   </body>
 </html>

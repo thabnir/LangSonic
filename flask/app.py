@@ -13,21 +13,21 @@ if model is not None:
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    return render_template("myindex.html")
 
 
 @app.route("/upload", methods=["POST"])
 def upload():
     if "file" not in request.files:
         
-        return render_template("index.html", error="No file part")
+        return render_template("myindex.html", error="No file part")
 
     file = request.files["file"]
     print(f"Got file: `{file}`")
 
     if file.filename == "":
         
-        return render_template("index.html", error="No selected file")
+        return render_template("myindex.html", error="No selected file")
 
     if file:
         directory = "./data"
@@ -41,12 +41,12 @@ def upload():
         prediction = predict_from_mp3(filepath)
         print(prediction)
         print(get_language(prediction))
-        return render_template("results.html", prediction=prediction)
+        return render_template("myindex.html", prediction=prediction)
         # return render_template("index.html", message="File uploaded successfully")
 
     # TODO: handle error
     print("Something went wrong")
-    return render_template("index.html", error="Something went wrong")
+    return render_template("myindex.html", error="Something went wrong")
 
 
 def predict_from_mp3(path):
