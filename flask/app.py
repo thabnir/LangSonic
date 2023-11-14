@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect
 import tensorflow as tf
 import mp3tospect
 import numpy as np
@@ -30,10 +30,12 @@ def upload():
         filepath = f"./data/{file.filename}"
         print(filepath)
         file.save(filepath)
-        # mp3path = mp3tospect.save_wav_as_mp3(filepath)
         prediction = predict_from_mp3(filepath)
+        # convert to a list of tuples, where each tuple is (language, probability)
+        prediction = list(zip(langs, prediction))
+        # sort them by probability
         print(prediction)
-        print(get_language(prediction))
+        prediction.sort(key=lambda x: x[1], reverse=True)
         return render_template("results.html", prediction=prediction)
 
     # TODO: handle error

@@ -3,223 +3,98 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>LangSonic</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-            background-color: #eae7e7;
-            color: #000;
-        }
-
-      header {
-        background-color: #95d8eb;
-        padding: 20px;
-        text-align: center;
-        font-size: 22px;
-      }
-
-      #logo {
-        position: absolute;
-        top: 20px;
-        right: 20px;
-        max-width: 170px;
-        height: 110px;
-      }
-
-      #slogan {
-        clear: both;
-      }
-
-      main {
-        padding: 20px;
-      }
-
-      #about-us {
-        text-align: justify;
-      }
-
-      #mic-container {
-        text-align: center;
-        margin-top: 20px;
-      }
-
-        #record-btn{
-            cursor: pointer;
-            display: inline-block;
-            margin-right: 10px;
-        }
-        #stop-btn {
-            cursor: pointer;
-            display: none;
-            margin-right: 10px;
-        }
-        #audio-container {
-            margin-top: 20px;
-        }
-
-      #audio-replay {
-        cursor: pointer;
-        display: none;
-      }
-
-      #timer {
-        display: none;
-        margin-top: 10px;
-      }
-    </style>
-  </head>
-
-  <body>
-    <header>
-      <h1>LangSonic</h1>
-      <div id="slogan">Decoding Diversity: Where Words Unite!</div>
-      <img
-        id="logo"
-        src="https://is1-ssl.mzstatic.com/image/thumb/Purple126/v4/03/74/e0/0374e0bb-307f-b91b-cd20-000f041db681/AppIcon-1x_U007emarketing-0-7-0-85-220.png/1200x630wa.png"
-        alt="Logo"
-      />
-    </header>
-
-    <main>
-        <section id="about-us">
-            <h2 style="color: #60ccea;"><b>About LangSonic:</b></h2>
-            <p>
-                Welcome to our Language Detection Model! This project aims to automatically identify the language
-                of a given voice note using signal processing, making it a versatile tool for applications such as
-                content filtering, language-specific analysis, and more. Happy Detecting!
-                Developed by Basel, Henry, and Abrar.
-            </p>
-        </section>
-
-        <section id="about-us">
-            <h2 style="color: #60ccea;"><b>Try it out:</b></h2>
-            <p>
-                Please click the record button and stop recording when done!
-            </p>
-            <div id="mic-container">
-                <div id="record-btn" onclick="startRecording()">🎤 Record</div>
-                <div id="stop-btn" onclick="stopRecording()">🛑 Stop</div>
-                <div id="timer">Recording time: <span id="timer-display">00:00</span></div>
-            </div>
-            <div id="audio-container">
-                <audio id="audio-player" controls></audio>
-                <div id="audio-replay" onclick="replayAudio()">🔊 Replay</div>
-            </div>
-        </section>
-
-      <section id="about-us">
-        <h2 style="color: #60ccea"><b>See the results:</b></h2>
-        <p>The language detected is: *whatever the model says*</p>
-      </section>
-    </main>
-
+    <title>LangSonic - Audio Recorder</title>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
     <script>
       let mediaRecorder;
       let audioChunks = [];
-      let timerInterval;
-      let seconds = 0;
-      let minutes = 0;
 
-      function sendAudioToBackend(blob) {
-        const formData = new FormData();
-        formData.append("file", blob, "recording.wav"); // Assuming the file type is 'audio/wav'
+      async function startRecording() {
+        document.getElementById("recordButton").disabled = true;
+        document.getElementById("stopButton").disabled = false;
 
-        fetch("/upload", {
-          method: "POST",
-          body: formData,
-        })
-          .then((response) => {
-            if (response.ok) {
-              console.log("Audio sent successfully to the backend");
-              // Perform actions based on backend response if needed
-            } else {
-              console.error("Failed to send audio to the backend");
-              // Handle error scenarios
-            }
-          })
-          .catch((error) => {
-            console.error("Error while sending audio:", error);
-            // Handle error scenarios
-          });
-      }
-
-      function startRecording() {
-        const stream = navigator.mediaDevices.getUserMedia({ audio: true });
-
-        stream.then((stream) => {
-          mediaRecorder = new MediaRecorder(stream);
-
-          mediaRecorder.ondataavailable = (event) => {
-            if (event.data.size > 0) {
-              audioChunks.push(event.data);
-            }
-          };
-
-          mediaRecorder.onstop = () => {
-            clearInterval(timerInterval);
-
-            const audioBlob = new Blob(audioChunks, { type: "audio/wav" });
-            const audioUrl = URL.createObjectURL(audioBlob);
-
-            console.log("Audio Blob:", audioBlob);
-            console.log("Audio URL:", audioUrl);
-
-            audioChunks = [];
-            document.getElementById("record-btn").style.display = "block";
-            document.getElementById("stop-btn").style.display = "none";
-            document.getElementById("timer").style.display = "none";
-            document.getElementById("audio-player").src = audioUrl;
-            document.getElementById("audio-replay").style.display = "none";
-
-            // Reset the timer
-            resetTimer();
-          };
-
-          mediaRecorder.start();
-          document.getElementById("record-btn").style.display = "none";
-          document.getElementById("stop-btn").style.display = "block";
-          document.getElementById("timer").style.display = "block";
-          document.getElementById("audio-replay").style.display = "none";
-
-          // Start the timer
-          timerInterval = setInterval(updateTimer, 1000);
+        const stream = await navigator.mediaDevices.getUserMedia({
+          audio: true,
         });
+        mediaRecorder = new MediaRecorder(stream);
+        mediaRecorder.ondataavailable = (event) => {
+          audioChunks.push(event.data);
+        };
+        mediaRecorder.onstop = sendAudioToServer;
+
+        mediaRecorder.start();
       }
 
       function stopRecording() {
-        if (mediaRecorder.state === "recording") {
-          mediaRecorder.stop();
-        }
+        document.getElementById("recordButton").disabled = false;
+        document.getElementById("stopButton").disabled = true;
+
+        mediaRecorder.stop();
+      }
+
+      function sendAudioToServer() {
         const audioBlob = new Blob(audioChunks, { type: "audio/wav" });
-        sendAudioToBackend(audioBlob);
-      }
+        const formData = new FormData();
+        formData.append("file", audioBlob, "recording.wav");
 
-      function updateTimer() {
-        seconds++;
-        if (seconds === 60) {
-          seconds = 0;
-          minutes++;
-        }
-
-        const formattedTime = `${String(minutes).padStart(2, "0")}:${String(
-          seconds
-        ).padStart(2, "0")}`;
-        document.getElementById("timer-display").innerText = formattedTime;
-      }
-
-      function resetTimer() {
-        seconds = 0;
-        minutes = 0;
-        document.getElementById("timer-display").innerText = "00:00";
-      }
-
-      function replayAudio() {
-        const audioPlayer = document.getElementById("audio-player");
-        audioPlayer.currentTime = 0;
-        audioPlayer.play();
+        fetch("/upload", { method: "POST", body: formData })
+          .then((response) => response.text()) // We expect a text response (HTML)
+          .then((html) => {
+            // Inject the HTML response into the resultsContainer
+            document.getElementById("resultsContainer").innerHTML = html;
+          })
+          .catch((error) => console.error("Error:", error));
       }
     </script>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+      <a class="navbar-brand" href="#">LangSonic</a>
+    </nav>
+
+    <div class="container mt-5">
+      <h1 class="text-center mb-4">Audio Recorder</h1>
+
+      <div class="text-center">
+        <button
+          id="recordButton"
+          class="btn btn-danger btn-lg"
+          onclick="startRecording()"
+        >
+          Start Recording
+        </button>
+        <button
+          id="stopButton"
+          class="btn btn-secondary btn-lg"
+          onclick="stopRecording()"
+          disabled
+        >
+          Stop Recording
+        </button>
+      </div>
+
+      <div id="resultsContainer" class="mt-4"></div>
+    </div>
+
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
   </body>
 </html>
