@@ -21,7 +21,7 @@ feature_extractor = CustomWhisperFeatureExtractor(
 IMAGE_DIMENSIONS = (13, 250, 1)
 
 
-def model_input_from_mp3(
+def model_input_from_audio(
     filepath,
     target_size=(13, 1000),
     feature_extractor=feature_extractor,
@@ -84,7 +84,7 @@ def model_input_from_mp3(
     return img_to_array_in_memory(input_features)
 
 
-def mp3_to_img(path, height=13):
+def audio_to_img(path, height=13):
     signal, sr = librosa.load(path)
     signal = resampy.resample(signal, sr_orig=sr, sr_new=16000, res_type="kaiser_fast")
 

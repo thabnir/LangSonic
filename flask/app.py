@@ -21,7 +21,7 @@ def upload():
         return render_template("index.html", error="No file part")
 
     file = request.files["file"]
-    print(f"File: {file}")
+    print(f"Got file: `{file}`")
 
     if file.filename == "":
         return render_template("index.html", error="No selected file")
@@ -30,11 +30,11 @@ def upload():
         filepath = f"./data/{file.filename}"
         print(filepath)
         file.save(filepath)
+        # mp3path = mp3tospect.save_wav_as_mp3(filepath)
         prediction = predict_from_mp3(filepath)
         print(prediction)
         print(get_language(prediction))
         return render_template("results.html", prediction=prediction)
-        # return render_template("index.html", message="File uploaded successfully")
 
     # TODO: handle error
     print("Something went wrong")
@@ -49,7 +49,9 @@ def predict_from_mp3(path):
     Returns:
         list containing the probabilities for each language
     """
-    return model.predict(np.array([mp3tospect.model_input_from_mp3(path)])).tolist()[0]
+    return model.predict(np.array([mp3tospect.model_input_from_audio(path)])).tolist()[
+        0
+    ]
 
 
 from languages import LANGUAGES
