@@ -34,20 +34,16 @@ python app.py
 Lastly, open a browser and navigate to your http://localhost:5000.
 
 ## Repository organization
-This repository contains the scripts used to both train the model and build the web app.
+This repository contains the scripts used to both train the model and build the web app. Go to flask/
 1. reports/
-   <br>
-   Deliverables submitted to the MAIS Intro to ML Bootcamp organizers
-   </br>
+   <br></br>
+   Deliverables submitted to the MAIS Intro to ML Bootcamp organizers.
 2. static/
-   <br>
-  CSS and javascript files for landing page
-  </br>
+   <br></br>
+  CSS and javascript files for landing pages.
 3. templates/
-   <br>
-  HTML template for landing pages
-  </br>
-4. app.py
-   <br>
-   Main python script to instantiate Flask server
    </br>
+  HTML template for landing pages.
+4. app.py
+   <br></br>
+   Main python script to instantiate Flask server.
