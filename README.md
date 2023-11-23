@@ -25,7 +25,9 @@ LangSonic demonstrates proficiency in the following languages:
 ## Running the app
 
 While the server is still hosting, simply go to https://lit-mesa-88597-fe23f01307fc.herokuapp.com/
-Otherwise, install all packages in requirements.txt. Then change into the main directory of this repository and run
+<br>
+</br>
+Otherwise, install all packages in requirements.txt. Then, change into the main directory of this repository and run
 ```
 python app.py
 ```
@@ -33,11 +35,19 @@ Lastly, open a browser and navigate to your http://localhost:5000.
 
 ## Repository organization
 This repository contains the scripts used to both train the model and build the web app.
-1. model/
-  Data, final model (results), and Python scripts used to train the CNN model,
+1. reports/
+   <br>
+   Deliverables submitted to the MAIS Intro to ML Bootcamp organizers
+   </br>
 2. static/
+   <br>
   CSS and javascript files for landing page
+  </br>
 3. templates/
+   <br>
   HTML template for landing pages
+  </br>
 4. app.py
+   <br>
    Main python script to instantiate Flask server
+   </br>
