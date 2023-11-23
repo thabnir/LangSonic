@@ -21,3 +21,23 @@ LangSonic demonstrates proficiency in the following languages:
 - **Efficient Processing:** LangSonic employs a high-speed CNN architecture for swift and efficient analysis of audio spectrograms.
 - **Precision:** The model is finely tuned to ensure accurate language classification, prioritizing reliability in diverse applications.
 - **Multilingual Capability:** With support for multiple languages, LangSonic caters to global projects requiring linguistic diversity.
+
+## Running the app
+
+While the server is still hosting, simply go to https://lit-mesa-88597-fe23f01307fc.herokuapp.com/
+Otherwise, install all packages in requirements.txt. Then change into the main directory of this repository and run
+```
+python app.py
+```
+Lastly, open a browser and navigate to your http://localhost:5000.
+
+## Repository organization
+This repository contains the scripts used to both train the model and build the web app.
+1. model/
+  Data, final model (results), and Python scripts used to train the CNN model,
+2. static/
+  CSS and javascript files for landing page
+3. templates/
+  HTML template for landing pages
+4. app.py
+   Main python script to instantiate Flask server
