@@ -28,7 +28,6 @@ LangSonic achieves an accuracy of 76% when classifying between English, German, 
 
 Training on a dataset of 450,000 spectrograms (5 languages at ~90,000 clips per language) for 10 epochs took approximately 20 minutes on an Apple M1 Pro chip.
 
-*Figure: Confusion matrix*
 ![Confusion Matrix](reports/screenshots/confusion_nov16.png)
 
 ![Validation Accuracy and Loss](reports/screenshots/i_val_acc_nov16.png)
