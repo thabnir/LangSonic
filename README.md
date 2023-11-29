@@ -1,48 +1,86 @@
 # LangSonic 🎙️
 
-Henry, Basel, Abrar
-
 ## Overview
 
-LangSonic is a reliable Convolutional Neural Network (CNN) model designed for rapid spoken-language classification. It processes audio files, represented as spectrograms, to accurately identify the language embedded within the sound waves.
+LangSonic is a reliable Convolutional Neural Network (CNN) model designed for rapid spoken-language classification. It processes audio files into log-mel spectrograms to accurately identify the language within.
 
 ## Supported Languages
 
-LangSonic demonstrates proficiency in the following languages:
+LangSonic supports the following languages:
 
-- English (🇺🇸)
-- German (🇩🇪)
-- French (🇫🇷)
-- Spanish (🇪🇸)
-- Italian (🇮🇹)
+- English 🇺🇸
+- German 🇩🇪
+- French 🇫🇷
+- Spanish 🇪🇸
+- Italian 🇮🇹
 
 ## Key Features
 
 - **Efficient Processing:** LangSonic employs a high-speed CNN architecture for swift and efficient analysis of audio spectrograms.
 - **Precision:** The model is finely tuned to ensure accurate language classification, prioritizing reliability in diverse applications.
-- **Multilingual Capability:** With support for multiple languages, LangSonic caters to global projects requiring linguistic diversity.
+- **Training Time:** The chosen CNN architecture is simple and quick to train. If you want to modify it or add a language, just add and process the data. On an M1 Pro chip, it takes approximately 20 minutes to train.
 
-## Running the app
+## Metrics
 
-While the server is still hosting, simply go to https://lit-mesa-88597-fe23f01307fc.herokuapp.com/
-<br>
-</br>
-Otherwise, install all packages in requirements.txt. Then, change into the main directory of this repository and run
-```
-python app.py
-```
-Lastly, open a browser and navigate to your http://localhost:5000.
+### Final Model Performance
 
-## Repository organization
-This repository contains the scripts used to both train the model and build the web app.
- #### 1. reports/
-   - Deliverables submitted to the MAIS Intro to ML Bootcamp organizers.
+LangSonic achieves an accuracy of 76% when classifying between English, German, French, Spanish, and Italian—comparable to a similar CNN model evaluated by Sergey Vilov. The confusion matrix highlights common misclassifications, while accuracy metrics for each language provide insights into the model's performance.
 
- #### 2. static/
-   - CSS and javascript files for landing pages.
+Training on a dataset of 450,000 spectrograms (5 languages at ~90,000 clips per language) for 10 epochs took approximately 20 minutes on an Apple M1 Pro chip.
 
- #### 3. templates/
-   - HTML template for landing pages.
+*Figure: Confusion matrix*
+![Confusion Matrix](reports/screenshots/confusion_nov16.png)
 
- #### 4. app.py
-   - Main python script to instantiate Flask server.
+![Validation Accuracy and Loss](reports/screenshots/i_val_acc_nov16.png)
+
+![Validation Accuracy and Loss](reports/screenshots/i_val_loss_nov16.png)
+
+
+## Running the Model
+
+### Testing on the Website
+
+To test the model on our website, visit the [LangSonic Website](https://lit-mesa-88597-fe23f01307fc.herokuapp.com/).
+
+### Running Locally
+
+To run the model locally, follow these steps:
+
+1. Clone the repository:
+
+    ```bash
+    git clone https://github.com/thabnir/LangSonic
+    ```
+
+2. Navigate to the `flask/` directory inside the repo:
+
+    ```bash
+    cd LangSonic/flask
+    ```
+
+3. Install the required packages:
+
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+4. Run the app:
+
+    ```bash
+    python app.py
+    ```
+
+This will serve the site on [localhost:5678/](http://localhost:5678/) for you to try out locally.
+
+## Repository Organization
+
+This repository contains both the scripts used to train the model and the code required to build the web app. The dataset used to train the model is a subset of Mozilla Common Voice, comprising the first three .zip files in the dataset for each language, each containing 40,000 audio samples. It can be obtained from [Mozilla Common Voice Dataset](https://huggingface.co/datasets/mozilla-foundation/common_voice_13_0).
+
+Data should be stored in `/data/<langname>/<filename>.mp3` (e.g., `data/mp3/en/common_voice_en_73382.mp3`). Then, run [`data_processing.ipynb`](data_processing.ipynb). This will process the audio files into spectrograms in `/data/spectrogram/<langname>_train_new/<filename>.png`. Finally, run [`training.ipynb`](training.ipynb).
+
+Reports for the associated MAIS 202 project can be found in `reports/`, and code for the website is located in `flask/`. Data processing code for the model's training is in [`data_processing.ipynb`](data_processing.ipynb), and model training code is in [`training.ipynb`](training.ipynb).
+The paper can be found at [paper.pdf](paper.pdf).
+
+## License
+
+This project is licensed under the MIT License - see [LICENSE.txt](LICENSE.txt) for details.
