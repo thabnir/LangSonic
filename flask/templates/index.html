@@ -3,115 +3,25 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>LangSonic</title>
-    <style>
-        header {
-            background-color: #13b8e5;
-            padding: 20px;
-            text-align: center;
-            font-size: 22px;
-        }
-
-        #logo {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            max-width: 150px;
-            height: 90px;
-        }
-
-        #slogan {
-            clear: both;
-        }
-
-        main {
-            padding: 20px;
-            background-image: url('https://coolbackgrounds.io/images/backgrounds/index/compute-ea4c57a4.png');
-            color: aliceblue;
-        }
-
-        #about-us {
-            text-align: justify;
-        }
-    </style>
-    <header>
-        <h1>LangSonic</h1>
-        <div id="slogan">Decoding Diversity: Where Words Unite!</div>
-        <img id="logo" src="https://is1-ssl.mzstatic.com/image/thumb/Purple126/v4/03/74/e0/0374e0bb-307f-b91b-cd20-000f041db681/AppIcon-1x_U007emarketing-0-7-0-85-220.png/1200x630wa.png" alt="Logo">
-    </header>
-
-    <main>
-      <div class="container mt-5">
-        <h1 class="text-center mb-4">Audio Recorder</h1>
-  
-        <div class="text-center">
-          <button
-            id="recordButton"
-            class="btn btn-danger btn-lg"
-            onclick="startRecording()"
-          >
-            Start Recording
-          </button>
-          <button
-            id="stopButton"
-            class="btn btn-secondary btn-lg"
-            onclick="stopRecording()"
-            disabled
-          >
-            Stop Recording
-          </button>
-        </div>
-  
-        <div id="resultsContainer" class="mt-4"></div>
-      </div>
-  
-      <script
-        src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"
-      ></script>
-      <script
-        src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-        crossorigin="anonymous"
-      ></script>
-      <script
-        src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"
-      ></script>
-        <section id="about-us">
-            <h2 style="color: #4cc2e3;"><b>About LangSonic:</b></h2>
-            <p>
-              LangSonic is a reliable Convolutional Neural Network model designed for rapid spoken-language classification. 
-              It processes audio files to accurately identify the language embedded within the sound waves.
-            </p>
-            <p>
-              In a world where borders fade and communication knows no bounds, LangSonic stems from a profound belief in the power of understanding. 
-              Language is not just a tool for expression; it's a bridge that connects diverse cultures and fosters meaningful connections. 
-              By creating a system that can identify the language a person is speaking, 
-              we aim to break down linguistic barriers and bring people closer together.
-              It's not just about recognizing words; it's about building a world where understanding is universal.
-            <p>
-              LangSonic demonstrates proficiency in the following languages:
-            </p>
-            <ul>
-            <li>English (🇺🇸)</li>
-            <li>German (🇩🇪)</li>
-            <li>French (🇫🇷)</li>
-            <li>Spanish (🇪🇸)</li>
-            <li>Italian (🇮🇹)</li>
-            </ul>
-
-        </section>
-        
-    </main>
+    <title>LangSonic - Audio Recorder</title>
     <link
       rel="stylesheet"
       href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
       integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
       crossorigin="anonymous"
     />
+    <style>
+      body {
+        background-image: url("/static/tech_bg.jpg");
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: cover;
+        color: aliceblue;
+      }
+      #main-div {
+        width: auto;
+      }
+    </style>
     <script>
       let mediaRecorder;
       let audioChunks = [];
@@ -140,18 +50,74 @@
       }
 
       function sendAudioToServer() {
-        const audioBlob = new Blob(audioChunks, { type: "audio/wav" });
+        const audioBlob = new Blob(audioChunks, { type: "audio/webm" });
         const formData = new FormData();
-        formData.append("file", audioBlob, "recording.wav");
+        formData.append("file", audioBlob, "recording.webm");
 
         fetch("/upload", { method: "POST", body: formData })
           .then((response) => response.text()) // We expect a text response (HTML)
           .then((html) => {
             // Inject the HTML response into the resultsContainer
             document.getElementById("resultsContainer").innerHTML = html;
+            console.log(
+              "New HTML response at:",
+              new Date().toLocaleTimeString(),
+              "Response: ",
+              html
+            );
+            // Reset the audio chunks
+            audioChunks = [];
           })
           .catch((error) => console.error("Error:", error));
       }
     </script>
   </head>
+  <body>
+    <div class="container mt-5" id="main-div">
+      <h1 class="text-center mb-4 display-4">LangSonic</h1>
+      <!-- <h1 class="text-center mb-4">Audio Recorder</h1> -->
+
+      <div class="text-center">
+        <p class="mb-4">
+          Click the "Start Recording" button, speak in English, French, German,
+          Spanish, or Italian and then click "Stop Recording" to let the AI
+          guess the language.
+        </p>
+
+        <button
+          id="recordButton"
+          class="btn btn-danger btn-lg"
+          onclick="startRecording()"
+        >
+          Start Recording
+        </button>
+        <button
+          id="stopButton"
+          class="btn btn-secondary btn-lg"
+          onclick="stopRecording()"
+          disabled
+        >
+          Stop Recording
+        </button>
+      </div>
+
+      <div id="resultsContainer" class="mt-4"></div>
+    </div>
+
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
+  </body>
 </html>
