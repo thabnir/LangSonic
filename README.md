@@ -1,5 +1,7 @@
 # LangSonic 🎙️
 
+Try out the model on the [LangSonic Website](https://lit-mesa-88597-fe23f01307fc.herokuapp.com/).
+
 ## Overview
 
 LangSonic is a reliable Convolutional Neural Network (CNN) model designed for rapid spoken-language classification. It processes audio files into log-mel spectrograms to accurately identify the language within.
@@ -35,13 +37,7 @@ Training on a dataset of 450,000 spectrograms (5 languages at ~90,000 clips per 
 ![Validation Accuracy and Loss](reports/screenshots/i_val_loss_nov16.png)
 
 
-## Running the Model
-
-### Testing on the Website
-
-To test the model on our website, visit the [LangSonic Website](https://lit-mesa-88597-fe23f01307fc.herokuapp.com/).
-
-### Running Locally
+## Running the Model Locally
 
 To run the model locally, follow these steps:
 
