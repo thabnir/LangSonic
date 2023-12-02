@@ -4,7 +4,9 @@ Try out the model on the [LangSonic Website](https://lit-mesa-88597-fe23f01307fc
 
 ## Overview
 
-LangSonic is a reliable Convolutional Neural Network (CNN) model designed for rapid spoken-language classification. It processes audio files into log-mel spectrograms to accurately identify the language within.
+LangSonic is a reliable Convolutional Neural Network (CNN) model designed for rapid spoken-language classification. It processes audio files into log-mel spectrograms to accurately identify the language within. 
+
+Read [the paper](paper.pdf)!
 
 ## Supported Languages
 
