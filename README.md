@@ -69,14 +69,27 @@ To run the model locally, follow these steps:
 
 This will serve the site on [localhost:5678/](http://localhost:5678/) for you to try out locally.
 
+## To train the model on your own:
+
+1. Download the mp3 data for each language from [Hugging Face](https://huggingface.co/datasets/mozilla-foundation/common_voice_13_0). Store it in the project in the format `/data/<langname>/<filename>.mp3` (e.g., `data/mp3/en/common_voice_en_73382.mp3`).
+
+2. Run [`data_processing.ipynb`](data_processing.ipynb) to process the audio files into spectrograms which will be cached in `/data/spectrogram/<langname>_train_new/<filename>.png`.
+
+4. Run [`training.ipynb`](training.ipynb) to train the model.
+
 ## Repository Organization
 
 This repository contains both the scripts used to train the model and the code required to build the web app. The dataset used to train the model is a subset of Mozilla Common Voice, comprising the first three .zip files in the dataset for each language, each containing 40,000 audio samples. It can be obtained from [Mozilla Common Voice Dataset](https://huggingface.co/datasets/mozilla-foundation/common_voice_13_0).
 
-Data should be stored in `/data/<langname>/<filename>.mp3` (e.g., `data/mp3/en/common_voice_en_73382.mp3`). Then, run [`data_processing.ipynb`](data_processing.ipynb). This will process the audio files into spectrograms in `/data/spectrogram/<langname>_train_new/<filename>.png`. Finally, run [`training.ipynb`](training.ipynb).
+Reports for the associated MAIS 202 project can be found in `reports/`.
 
-Reports for the associated MAIS 202 project can be found in `reports/`, and code for the website is located in `flask/`. Data processing code for the model's training is in [`data_processing.ipynb`](data_processing.ipynb), and model training code is in [`training.ipynb`](training.ipynb).
-The paper can be found at [paper.pdf](paper.pdf).
+Code for the website is located in `flask/`.
+
+Data processing code for the model's training is in [`data_processing.ipynb`](data_processing.ipynb)
+
+Model training code is in [`training.ipynb`](training.ipynb).
+
+Our technical report on the model can be found at [paper.pdf](paper.pdf).
 
 ## License
 
